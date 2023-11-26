@@ -8,8 +8,6 @@ import peer from "./Peer.js";
 const Room = () => {
   const Navigate = useNavigate();
   const { id } = useParams();
-  // console.log(id);
-
   const handleEnterEditor = () => {
     Navigate("/editor");
   };
@@ -45,7 +43,6 @@ const Room = () => {
 
   const handleIncommingCall = useCallback(
     async ({ from, offer }) => {
-      
       console.log("Incoming Call from " , from )
       setRemoteSocketId(from);
       console.log("Incoming Call from " , remoteSocketId )
@@ -108,6 +105,7 @@ const Room = () => {
 
 
   useEffect(() => {
+    
     peer.peer.addEventListener("track", async (ev) => {
       const remoteStream = ev.streams;
       console.log("GOT TRACKS!!");
@@ -117,6 +115,7 @@ const Room = () => {
 
 
   useEffect(() => {
+    
     socket.on("user:joined", handleUserJoined);
     socket.on("icomming:call", handleIncommingCall);
     socket.on("call:accepted", handleCallAccepted);
@@ -154,13 +153,14 @@ const Room = () => {
           Editor
         </button>
       </nav>
-      <h1>{remoteSocketId ? ("socket connected"): "no one is here!" }</h1>
+      
+      {/* <h1>{remoteSocketId ? ("socket connected"): "no one is here!" }</h1> */}
       {myStream && <button onClick={sendStreams} >Join 🎥</button>}
       {remoteSocketId && <button onClick={handleCallUser}>Call 📞</button>}
       <div className="flex justify-center align-middle items-center gap-3 bg-gray-200 w-full h-full ">
         <div className="  w-1/2 rounded-lg ">
-          {myStream && <video
-            className=" shadow-xl shadow-black border-spacing-2 border-black w-full rounded-lg m-3 p-4 "
+          {<video
+            className="rotate-270 shadow-xl shadow-black border-spacing-2 border-black w-full rounded-lg m-3 p-4 "
             id="myvideo"
             ref={(ref) => {
               if (ref) {
@@ -172,7 +172,7 @@ const Room = () => {
         </div>
         <div className=" w-1/2 ">
           {remoteStream && <video
-            className=" shadow-xl shadow-black  border-spacing-2 border-black w-full rounded-lg m-3 p-4 "
+            className="shadow-xl shadow-black  border-spacing-2 border-black w-full rounded-lg m-3 p-4 "
             id="remotevideo"
             ref={(ref) => {
               if (ref) {
@@ -181,6 +181,22 @@ const Room = () => {
             }}
             autoPlay
           ></video>}
+          <br></br>
+          <div className=" ">
+          <h1 className="font-extrabold text-xl ">{remoteSocketId ? ("Candidate connected"): "Waiting For Someone to Connect ..."}</h1>
+            {/* <button className="uppercase bg-blue-500 px-4 py-2 m-2 rounded-lg hover:translate-y-2  ">
+              Chat 💬
+            </button>
+            <button className="uppercase bg-blue-500 px-4 py-2 m-2 rounded-lg hover:translate-y-2  ">
+              Share 📤
+            </button> */}
+            <button className="uppercase bg-blue-500 px-4 py-2 m-2 rounded-lg hover:translate-y-2  ">
+              Mute 🔇
+            </button>
+            <button className="uppercase bg-blue-500 px-4 py-2 m-2 rounded-lg hover:translate-y-2  " onClick={handleCallUser}>
+              Video 📹
+            </button>
+          </div>
         </div>
       </div>
     </div>
