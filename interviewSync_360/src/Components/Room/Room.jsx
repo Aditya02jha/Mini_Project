@@ -135,7 +135,7 @@ const Room = () => {
     handleNegoNeedIncomming,
     handleNegoNeedFinal,
   ]);
-// -----------------------------------------------------x-x-x-xx-x-x-  USEEFFECT x-x-x-x-x-x-x-x-x-x-x---------------------------------------------
+// -----------------------------------------------------x-x-x-xx-x-x-  USE-EFFECT x-x-x-x-x-x-x-x-x-x-x---------------------------------------------
   useEffect(() => {
     const setupMediaStream = async () => {
       try {
