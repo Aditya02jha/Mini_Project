@@ -40,5 +40,11 @@ io.on("connection" , (socket)=>{
       socket.on("peer:nego:done", ({ to, ans }) => {
         console.log("peer:nego:done", ans);
         io.to(to).emit("peer:nego:final", { from: socket.id, ans });
+      
+      socket.on("codeChange" , ({to , code})=>{
+        socket.to(to).emit("codeChange" , {code});
+        console.log(code);
+      })
+      
       });
 });

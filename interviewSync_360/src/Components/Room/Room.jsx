@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSocket } from "../../Context/SocketProvider";
 import peer from "./Peer.js";
+import Collab_editor from "./Collab_editor.jsx";
 
 // import { send } from "vite";
 
@@ -200,6 +201,8 @@ const toggleCamera = () => {
         </button>
       </nav>
 
+      <Collab_editor socket={socket} remoteSocketId={remoteSocketId} /> 
+            
       <h1>{remoteSocketId ? "socket connected" : "no one is here!"}</h1>
       {myStream && <button onClick={sendStreams}>Join 🎥</button>}
       {remoteSocketId && <button onClick={handleCallUser}>Call 📞</button>}
@@ -231,8 +234,6 @@ const toggleCamera = () => {
               autoPlay
             ></video>
           )}
-          <br></br>
-          <div className=" "></div>
         </div>
       </div>
       <button

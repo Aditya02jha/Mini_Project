@@ -15,7 +15,7 @@
     "@mui/icons-material": "^5.14.18",
     "@mui/material": "^5.14.18",
     "chokidar": "^3.5.3",
-    "codemirror": "^5.65.15",
+    "codemirror": "^5.65.16",
     "react": "^18.2.0",
     "react-codemirror2": "^7.3.0",
     "react-dom": "^18.2.0",
