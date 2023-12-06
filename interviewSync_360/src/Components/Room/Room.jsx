@@ -40,7 +40,7 @@ const Room = () => {
     socket.emit("user:call", { to: remoteSocketId, offer });
   }, [remoteSocketId, socket]);
 
-// -----------------------------------------------------x-x-x-xx-x-x-x- INCOMING CALL  x-x-x-x-x-x-x-x---------------------------------------------
+  // -----------------------------------------------------x-x-x-xx-x-x-x- INCOMING CALL  x-x-x-x-x-x-x-x---------------------------------------------
 
   const handleIncommingCall = useCallback(
     async ({ from, offer }) => {
@@ -56,7 +56,7 @@ const Room = () => {
       const ans = await peer.getAnswer(offer);
       socket.emit("call:accepted", { to: from, ans });
     },
-    [socket ]
+    [socket]
   );
 
   // -----------------------------------------------------x-x-x-xx-x-x-x- Call ACCEPTED -x-x-x-x-x-x-x-x-x-x---------------------------------------------
@@ -113,7 +113,7 @@ const Room = () => {
   }, []);
 
   // -----------------------------------------------------x-x-x-xx-x-x-x Socket USEEFFECT x-x-x-x-x-x-x-x-x---------------------------------------------
-  
+
   useEffect(() => {
     socket.on("user:joined", handleUserJoined);
     socket.on("icomming:call", handleIncommingCall);
@@ -136,7 +136,7 @@ const Room = () => {
     handleNegoNeedIncomming,
     handleNegoNeedFinal,
   ]);
-// -----------------------------------------------------x-x-x-xx-x-x-  USE-EFFECT x-x-x-x-x-x-x-x-x-x-x---------------------------------------------
+  // -----------------------------------------------------x-x-x-xx-x-x-  USE-EFFECT x-x-x-x-x-x-x-x-x-x-x---------------------------------------------
   useEffect(() => {
     const setupMediaStream = async () => {
       try {
@@ -155,88 +155,78 @@ const Room = () => {
     setupMediaStream();
   }, [socket]);
 
-// -----------------------------------------------------x-x-x-xx RETURN STATEMENT-x-x-x-x-x-x-x-x-x---------------------------------------------
+  // -----------------------------------------------------x-x-x-xx RETURN STATEMENT-x-x-x-x-x-x-x-x-x---------------------------------------------
 
-// Mute / Unmute function
-const toggleMic = () => {
-  if (myStream) {
-    const enabled = myStream.getAudioTracks()[0].enabled;
-    if (enabled) {
-      myStream.getAudioTracks()[0].enabled = false;
-      setMic(false);
-    } else {
-      myStream.getAudioTracks()[0].enabled = true;
-      setMic(true);
+  // Mute / Unmute function
+  const toggleMic = () => {
+    if (myStream) {
+      const enabled = myStream.getAudioTracks()[0].enabled;
+      if (enabled) {
+        myStream.getAudioTracks()[0].enabled = false;
+        setMic(false);
+      } else {
+        myStream.getAudioTracks()[0].enabled = true;
+        setMic(true);
+      }
     }
-  }
-};
+  };
 
-// Video on / off function
-const toggleCamera = () => {
-  if (myStream) {
-    const enabled = myStream.getVideoTracks()[0].enabled;
-    if (enabled) {
-      myStream.getVideoTracks()[0].enabled = false;
-      setCamera(false);
-    } else {
-      myStream.getVideoTracks()[0].enabled = true;
-      setCamera(true);
+  // Video on / off function
+  const toggleCamera = () => {
+    if (myStream) {
+      const enabled = myStream.getVideoTracks()[0].enabled;
+      if (enabled) {
+        myStream.getVideoTracks()[0].enabled = false;
+        setCamera(false);
+      } else {
+        myStream.getVideoTracks()[0].enabled = true;
+        setCamera(true);
+      }
     }
-  }
-};
+  };
 
-
-
+ 
   return (
     <div>
       <nav className="flex justify-between">
         <button className="uppercase font-medium px-4 py-2 m-2 ">
           InterViewSync_360
         </button>
-        <button
-          className="uppercase bg-blue-500 px-4 py-2 m-2 rounded-lg hover:translate-y-2  "
-          onClick={handleEnterEditor}
-        >
-          Editor
-        </button>
       </nav>
-
-      <Collab_editor socket={socket} remoteSocketId={remoteSocketId} /> 
-            
-      <h1>{remoteSocketId ? "socket connected" : "no one is here!"}</h1>
-      {myStream && <button onClick={sendStreams}>Join 🎥</button>}
-      {remoteSocketId && <button onClick={handleCallUser}>Call 📞</button>}
-      <div className="flex justify-center align-middle items-center gap-3 bg-gray-200 w-full h-full ">
-        <div className="  w-1/2 rounded-lg ">
-          {
-            <video
-              className="shadow-xl shadow-black border-spacing-2 border-black w-full rounded-lg m-3 p-4 "
-              id="myvideo"
-              ref={(ref) => {
-                if (ref) {
-                  ref.srcObject = myStream;
-                }
-              }}
-              autoPlay
-            ></video>
-          }
-        </div>
-        <div className=" w-1/2 ">
-          {remoteStream && (
-            <video
-              className="shadow-xl shadow-black  border-spacing-2 border-black w-full rounded-lg m-3 p-4 "
-              id="remotevideo"
-              ref={(ref) => {
-                if (ref) {
-                  ref.srcObject = remoteStream;
-                }
-              }}
-              autoPlay
-            ></video>
-          )}
-        </div>
-      </div>
-      <button
+      <div className="flex h-screen bg-dark">
+        {/* Video Section */}
+        <div className="flex flex-col items-center w-1/2 bg-blue-900 p-4">
+          <h1 className="text-white text-lg font-bold mb-4">Video Section</h1>
+          <div className="w-full rounded-lg mb-4 overflow-hidden">
+            {myStream && (
+              <video
+                className="w-full h-full shadow-xl shadow-black border-spacing-2 border-black"
+                id="myvideo"
+                ref={(ref) => {
+                  if (ref) {
+                    ref.srcObject = myStream;
+                  }
+                }}
+                autoPlay
+              ></video>
+            )}
+          </div>
+          <div className="w-full rounded-lg overflow-hidden">
+            {remoteStream && (
+              <video
+                className="w-full h-full shadow-xl shadow-black border-spacing-2 border-black"
+                id="remotevideo"
+                ref={(ref) => {
+                  if (ref) {
+                    ref.srcObject = remoteStream;
+                  }
+                }}
+                autoPlay
+              ></video>
+            )}
+          </div>
+          {/* Mute/Unmute and Video On/Off buttons */}
+          <button
         className={`uppercase ${
           mic ? "bg-blue-500" : "bg-red-500"
         } px-4 py-2 m-2 rounded-lg hover:translate-y-2`}
@@ -252,18 +242,25 @@ const toggleCamera = () => {
       >
         Video 📹
       </button>
+          
+        </div>
 
-      <button className="uppercase bg-blue-500 px-4 py-2 m-2 rounded-lg hover:translate-y-2  ">
-        Chat 💬
-      </button>
-      <button className="uppercase bg-blue-500 px-4 py-2 m-2 rounded-lg hover:translate-y-2  ">
-        Share 📤
-      </button>
-      <h1 className="font-extrabold text-xl ">
-        {remoteSocketId
-          ? "Candidate connected"
-          : "Waiting For Someone to Connect ..."}
-      </h1>
+        {/* Editor Section */}
+        <div className="w-1/2 p-4">
+          <h1 className="text-white text-lg font-bold mb-4">Editor Section</h1>
+          {remoteSocketId && (
+            <Collab_editor socket={socket} remoteSocketId={remoteSocketId} />
+          )}
+          <h1>{remoteSocketId ? "socket connected" : "no one is here!"}</h1>
+          {/* Join and Call buttons */}
+          {myStream && <button onClick={sendStreams}>Join 🎥</button>}
+      {remoteSocketId && <button onClick={handleCallUser}>Call 📞</button>}
+          {/* ... (existing code) */}
+          {/* Mute/Unmute and Video On/Off buttons */}
+
+          {/* ... (existing code) */}
+        </div>
+      </div>
     </div>
   );
 };
