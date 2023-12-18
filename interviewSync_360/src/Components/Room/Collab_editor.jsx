@@ -52,17 +52,53 @@ const CollabEditor = ({ socket, remoteSocketId }) => {
     }
   };
 
-  function handleRun() {
-    const code = editorRef.current.getValue();
-    try {
-      const result = eval(code);
-      setOutput(result);
-      console.log(result);
-    } catch (err) {
-      console.log("error in handle run \n", err);
-    }
-  }
+  // function handleRun() {
+  //   const code = editorRef.current.getValue();
+  
+  //   // Create an iframe to run the code separately
+  //   const iframe = document.createElement("iframe");
+  //   document.body.appendChild(iframe);
+  
+  //   // Generate a unique ID for the iframe
+  //   const iframeId = `iframe_${Date.now()}`;
+  //   iframe.id = iframeId;
+  
+  //   // Write the code into the iframe and execute it
+  //   iframe.contentDocument.write(`
+  //     <script>
+  //       try {
+  //         const result = ${code};
+  //         parent.postMessage({ type: 'executionResult', result }, '*');
+  //       } catch (error) {
+  //         parent.postMessage({ type: 'executionError', error: error.message }, '*');
+  //       }
+  //     </script>
+  //   `);
+  
+    // Listen for the result or error message from the iframe
+    window.addEventListener("message", (event) => {
+      const codeResultDiv = document.getElementById("code_result");
+      if (event.data.type === "executionResult") {
+        setOutput(event.data.result);
+        codeResultDiv.innerText = event.data.result;
+      } else if (event.data.type === "executionError") {
+        console.error("Error during code execution:", event.data.error);
+        setOutput(`Error: ${event.data.error}`);
+        codeResultDiv.innerText = `Error: ${event.data.error}`;
+      }
+  
+      // Remove the iframe after execution
+      const iframeToRemove = document.getElementById(iframeId);
+      if (iframeToRemove) {
+        document.body.removeChild(iframeToRemove);
+      }
 
+    });
+  }
+  
+  
+  
+  
   return (
     <div>
       <button
