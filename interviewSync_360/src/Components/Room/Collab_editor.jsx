@@ -52,28 +52,28 @@ const CollabEditor = ({ socket, remoteSocketId }) => {
     }
   };
 
-  // function handleRun() {
-  //   const code = editorRef.current.getValue();
+  function handleRun() {
+    const code = editorRef.current.getValue();
   
-  //   // Create an iframe to run the code separately
-  //   const iframe = document.createElement("iframe");
-  //   document.body.appendChild(iframe);
+    // Create an iframe to run the code separately
+    const iframe = document.createElement("iframe");
+    document.body.appendChild(iframe);
   
-  //   // Generate a unique ID for the iframe
-  //   const iframeId = `iframe_${Date.now()}`;
-  //   iframe.id = iframeId;
+    // Generate a unique ID for the iframe
+    const iframeId = `iframe_${Date.now()}`;
+    iframe.id = iframeId;
   
-  //   // Write the code into the iframe and execute it
-  //   iframe.contentDocument.write(`
-  //     <script>
-  //       try {
-  //         const result = ${code};
-  //         parent.postMessage({ type: 'executionResult', result }, '*');
-  //       } catch (error) {
-  //         parent.postMessage({ type: 'executionError', error: error.message }, '*');
-  //       }
-  //     </script>
-  //   `);
+    // Write the code into the iframe and execute it
+    iframe.contentDocument.write(`
+      <script>
+        try {
+          const result = ${code};
+          parent.postMessage({ type: 'executionResult', result }, '*');
+        } catch (error) {
+          parent.postMessage({ type: 'executionError', error: error.message }, '*');
+        }
+      </script>
+    `);
   
     // Listen for the result or error message from the iframe
     window.addEventListener("message", (event) => {
