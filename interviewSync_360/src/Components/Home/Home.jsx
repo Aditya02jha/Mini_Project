@@ -73,7 +73,7 @@ const Home = () => {
               <input
                 placeholder="Email"
                 type="email"
-                className="bg-gray-400 text mx-2 my-6 rounded-lg px-6 py-3 border-2 border-black"
+                className="bg-white text-black mx-2 my-6 rounded-lg px-6 py-3 border-2 border-black"
                 onChange={(e) => setEmail(e.target.value)}
               />
               <button
@@ -89,14 +89,14 @@ const Home = () => {
               <input
                 placeholder="Email"
                 type="email"
-                className="bg-gray-400 text mx-2 my-6 rounded-lg px-6 py-3 border-2 border-black"
+                className="bg-white text-black mx-2 my-6 rounded-lg px-6 py-3 border-2 border-black"
                 onChange={(e) => setEmail(e.target.value)}
               />
 
               <input
                 placeholder="Enter room number"
                 type="text"
-                className="bg-gray-400 text mx-2 my-6 rounded-lg px-6 py-3 border-2 border-black"
+                className="bg-white text-red mx-2 my-6 rounded-lg px-6 py-3 border-2 border-black"
                 onChange={(e) => setRoomid(e.target.value)}
               />
 

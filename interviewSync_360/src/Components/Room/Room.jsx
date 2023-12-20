@@ -185,7 +185,15 @@ const Room = () => {
     }
   };
 
- 
+  const copyRoomId = ()=>{
+
+    const roomid = id;
+    navigator.clipboard.writeText(roomid);
+    alert("RoomId Copied to Clipboard");
+  }
+
+  
+
   return (
     <div>
       <nav className="flex justify-between">
@@ -227,22 +235,31 @@ const Room = () => {
           </div>
           {/* Mute/Unmute and Video On/Off buttons */}
           <button
-        className={`uppercase ${
-          mic ? "bg-blue-500" : "bg-red-500"
-        } px-4 py-2 m-2 rounded-lg hover:translate-y-2`}
-        onClick={toggleMic}
-      >
-        Mute 🔇
-      </button>
-      <button
-        className={`uppercase ${
-          camera ? "bg-blue-500" : "bg-red-500"
-        } px-4 py-2 m-2 rounded-lg hover:translate-y-2`}
-        onClick={toggleCamera}
-      >
-        Video 📹
-      </button>
-          
+            className={`uppercase ${
+              mic ? "bg-blue-500" : "bg-red-500"
+            } px-4 py-2 m-2 rounded-lg hover:translate-y-2`}
+            onClick={toggleMic}
+          >
+            Mute 🔇
+          </button>
+          <button
+            className={`uppercase ${
+              camera ? "bg-blue-500" : "bg-red-500"
+            } px-4 py-2 m-2 rounded-lg hover:translate-y-2`}
+            onClick={toggleCamera}
+          >
+            Video 📹
+          </button>
+
+          {myStream && (
+            <button
+              onClick={copyRoomId}
+              className="bg-blue-500
+             px-4 py-2 m-2 rounded-lg hover:translate-y-2"
+            >
+              RoomID
+            </button>
+          )}
         </div>
 
         {/* Editor Section */}
@@ -254,7 +271,8 @@ const Room = () => {
           <h1>{remoteSocketId ? "socket connected" : "no one is here!"}</h1>
           {/* Join and Call buttons */}
           {myStream && <button onClick={sendStreams}>Join 🎥</button>}
-      {remoteSocketId && <button onClick={handleCallUser}>Call 📞</button>}
+          {remoteSocketId && <button onClick={handleCallUser}>Call 📞</button>}
+
           {/* ... (existing code) */}
           {/* Mute/Unmute and Video On/Off buttons */}
 

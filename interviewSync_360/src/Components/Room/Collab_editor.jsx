@@ -19,6 +19,7 @@ const CollabEditor = ({ socket, remoteSocketId }) => {
 
       setEditor(codeMirror);
       editorRef.current = codeMirror;
+      editorRef.current.setCursor({ line: 0, ch: 0 });
 
       const handleRemoteChange = (data) => {
         console.log("data.sender: ", data.sender);
@@ -27,6 +28,7 @@ const CollabEditor = ({ socket, remoteSocketId }) => {
           console.log("remote change", data.code, data.sender);
           isRemoteChange.current = true;
           editorRef.current.setValue(data.code);
+          editorRef.current.setCursor({ line: 0, ch: 0 });
         }
       };
 
